@@ -9,6 +9,6 @@
 		<pns:jta-data-source>twitterComplianceDS</pns:jta-data-source>
 		<pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToValidateWeeklyEntity</pns:class>
 		<pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToValidateMonthlyEntity</pns:class>
-		<pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToDelete</pns:class>
+		<pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToDeleteEntity</pns:class>
 	</pns:persistence-unit>
 </pns:persistence>

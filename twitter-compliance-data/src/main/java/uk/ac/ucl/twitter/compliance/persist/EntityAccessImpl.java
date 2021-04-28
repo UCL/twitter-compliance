@@ -8,7 +8,9 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import uk.ac.ucl.twitter.compliance.TweetReference;
+import uk.ac.ucl.twitter.compliance.ValidationInterval;
 
 @Stateless
 public class EntityAccessImpl implements EntityAccess {
@@ -24,8 +26,11 @@ public class EntityAccessImpl implements EntityAccess {
 
   private final TypedQuery<TweetToValidateMonthlyEntity> tweetToValidateMonthlyQuery = entityManager
       .createNamedQuery(TweetToValidateMonthlyEntity.QUERY_FIND_ALL, TweetToValidateMonthlyEntity.class);
-
-  private final Function<TweetToValidate, TweetReference> mapEntityToReference = t -> {
+  
+  private final TypedQuery<TweetToDeleteEntity> tweetToDeleteQuery = entityManager
+      .createNamedQuery(TweetToDeleteEntity.FIND_BY_TWEETID, TweetToDeleteEntity.class);
+  
+  private final Function<TweetToValidate, TweetReference> mapEntityToReference = (TweetToValidate t) -> {
     TweetReference instance = new TweetReference();
     instance.setFileRef(t.getFileRef());
     instance.setIdStr(t.getTweetIdStr());
@@ -49,19 +54,32 @@ public class EntityAccessImpl implements EntityAccess {
   }
 
   @Override
-  public void setTweetsToDelete(List<TweetReference> tweetsToDelete) {
-    // TODO Auto-generated method stub
+  @Transactional
+  public void setTweetsToDelete(List<String> tweetsToDelete) {
+    int counter = 0;
+    for (String s : tweetsToDelete) {
+      TweetToDeleteEntity entity = new TweetToDeleteEntity();
+      entity.setTweetIdStr(s);
+      entityManager.persist(entity);
+      if ((counter % 1000) == 0) {
+        entityManager.flush();
+        entityManager.clear();
+      }
+    }
   }
 
   @Override
-  public List<TweetReference> getBatchOfTweetsToDelete() {
+  public List<TweetReference> getBatchOfTweetsToDelete(int batchSize, ValidationInterval interval) {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public void setDeletionComplete(TweetReference tweetReference) {
-    // TODO Auto-generated method stub
+  public void setDeletionComplete(String tweetId) {
+    tweetToDeleteQuery.setParameter("tweetIdStr", tweetId);
+    TweetToDeleteEntity entity = tweetToDeleteQuery.getSingleResult();
+    entityManager.remove(entity);
+    entityManager.flush();
   }
 
 }
