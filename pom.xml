@@ -14,6 +14,7 @@
 		<module>twitter-compliance-scheduler</module>
 		<module>twitter-compliance-api-client</module>
 		<module>twitter-compliance-batch</module>
+		<module>twitter-compliance-lib</module>
 	</modules>
 
 	<properties>
