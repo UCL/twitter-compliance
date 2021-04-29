@@ -10,7 +10,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import uk.ac.ucl.twitter.compliance.TweetReference;
-import uk.ac.ucl.twitter.compliance.ValidationInterval;
+import uk.ac.ucl.twitter.compliance.VerificationInterval;
 
 @Stateless
 public class EntityAccessImpl implements EntityAccess {
@@ -38,7 +38,7 @@ public class EntityAccessImpl implements EntityAccess {
   };
 
   @Override
-  public List<TweetReference> getTweetsToValidateWeekly() {
+  public List<TweetReference> getTweetsToVerifyWeekly() {
     return tweetToValidateWeeklyQuery.getResultList()
       .stream()
       .map(mapEntityToReference)
@@ -46,7 +46,7 @@ public class EntityAccessImpl implements EntityAccess {
   }
 
   @Override
-  public List<TweetReference> getTweetsToValidateMonthly() {
+  public List<TweetReference> getTweetsToVerifyMonthly() {
     return tweetToValidateMonthlyQuery.getResultList()
       .stream()
       .map(mapEntityToReference)
@@ -69,7 +69,7 @@ public class EntityAccessImpl implements EntityAccess {
   }
 
   @Override
-  public List<TweetReference> getBatchOfTweetsToDelete(int batchSize, ValidationInterval interval) {
+  public List<TweetReference> getBatchOfTweetsToDelete(int batchSize, VerificationInterval interval) {
     // TODO Auto-generated method stub
     return null;
   }
