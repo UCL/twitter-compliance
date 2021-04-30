@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 
 import java.io.Serializable;
 
-public abstract class TweetToValidateImpl implements Serializable {
+public abstract class TweetToVerifyImpl implements Serializable {
 
   private static final long serialVersionUID = 1L;
 

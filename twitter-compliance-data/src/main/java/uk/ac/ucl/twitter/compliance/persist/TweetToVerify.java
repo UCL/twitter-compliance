@@ -1,6 +1,6 @@
 package uk.ac.ucl.twitter.compliance.persist;
 
-public interface TweetToValidate {
+public interface TweetToVerify {
 
   public String getFileRef();
 
