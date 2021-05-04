@@ -4,6 +4,10 @@
 .settings/
 src/site/
 
+# IntelliJ IDEA
+.idea/
+*.iml
+
 # Maven
 target/
 pom.xml.tag

@@ -7,8 +7,19 @@
 		<artifactId>twitter-compliance</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>twitter-compliance-scheduler</artifactId>
-	<name>twitter compliance scheduler</name>
-	<description>Scheduler module</description>
+	<artifactId>twitter-compliance-lib</artifactId>
+	<name>twitter compliance lib</name>
+	<description>Library module</description>
 	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>jakarta.platform</groupId>
+			<artifactId>jakarta.jakartaee-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+		</dependency>
+	</dependencies>
 </project>
