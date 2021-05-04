@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -33,29 +34,17 @@ public class EntityAccessImpl implements EntityAccess {
   /**
    * Selects all tweets set for weekly verification.
    */
-  private final TypedQuery<TweetToVerifyWeeklyEntity>
-    tweetToVerifyWeeklyQuery = entityManager
-      .createNamedQuery(
-          TweetToVerifyWeeklyEntity.QUERY_FIND_ALL,
-          TweetToVerifyWeeklyEntity.class);
+  private TypedQuery<TweetToVerifyWeeklyEntity> tweetToVerifyWeeklyQuery;
 
   /**
    * Selects all tweets set for monthly verification.
    */
-  private final TypedQuery<TweetToVerifyMonthlyEntity>
-    tweetToVerifyMonthlyQuery = entityManager
-      .createNamedQuery(
-          TweetToVerifyMonthlyEntity.QUERY_FIND_ALL,
-          TweetToVerifyMonthlyEntity.class);
+  private TypedQuery<TweetToVerifyMonthlyEntity> tweetToVerifyMonthlyQuery;
 
   /**
    * Selects single tweet from pool set for deletion.
    */
-  private final TypedQuery<TweetToDeleteEntity>
-    tweetToDeleteQuery = entityManager
-      .createNamedQuery(
-          TweetToDeleteEntity.FIND_BY_TWEETID,
-          TweetToDeleteEntity.class);
+  private TypedQuery<TweetToDeleteEntity> tweetToDeleteQuery;
 
   /**
    * Converts from Entity classes to {@code TweetReference}.
@@ -67,6 +56,22 @@ public class EntityAccessImpl implements EntityAccess {
       instance.setIdStr(t.getTweetIdStr());
       return instance;
     };
+
+  /**
+   * Initialisation of named queries.
+   */
+  @PostConstruct
+  public void postConstruct() {
+    tweetToVerifyWeeklyQuery = entityManager.createNamedQuery(
+            TweetToVerifyWeeklyEntity.QUERY_FIND_ALL,
+            TweetToVerifyWeeklyEntity.class);
+    tweetToVerifyMonthlyQuery = entityManager.createNamedQuery(
+            TweetToVerifyMonthlyEntity.QUERY_FIND_ALL,
+            TweetToVerifyMonthlyEntity.class);
+    tweetToDeleteQuery = entityManager.createNamedQuery(
+            TweetToDeleteEntity.FIND_BY_TWEETID,
+            TweetToDeleteEntity.class);
+  }
 
   /**
    * Obtains the list of tweets set for weekly verification.
