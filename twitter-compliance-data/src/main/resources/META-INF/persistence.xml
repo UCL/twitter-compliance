@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pns:persistence version="3.0"
-	xmlns:pns="https://jakarta.ee/xml/ns/persistence"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
-	<pns:persistence-unit name="twitterCompliancePU"
-		transaction-type="JTA">
-		<pns:description>Persistence unit for the Twitter compliance application</pns:description>
-		<pns:jta-data-source>${jta.data.source}</pns:jta-data-source>
-		<pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToVerifyWeeklyEntity</pns:class>
-		<pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToVerifyMonthlyEntity</pns:class>
-		<pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToDeleteEntity</pns:class>
-	</pns:persistence-unit>
+  xmlns:pns="https://jakarta.ee/xml/ns/persistence"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+  <pns:persistence-unit name="twitterCompliancePU"
+    transaction-type="JTA">
+    <pns:description>Persistence unit for the Twitter compliance application</pns:description>
+    <pns:jta-data-source>${jta.data.source}</pns:jta-data-source>
+    <pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToVerifyWeeklyEntity</pns:class>
+    <pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToVerifyMonthlyEntity</pns:class>
+    <pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToDeleteEntity</pns:class>
+  </pns:persistence-unit>
 </pns:persistence>
