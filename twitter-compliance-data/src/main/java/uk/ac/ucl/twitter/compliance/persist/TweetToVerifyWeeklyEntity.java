@@ -3,6 +3,7 @@ package uk.ac.ucl.twitter.compliance.persist;
 import java.io.Serializable;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
@@ -25,5 +26,12 @@ public class TweetToVerifyWeeklyEntity extends TweetToVerifyImpl
    */
   public static final String QUERY_FIND_ALL =
       "TweetToVerifyWeeklyEntity.findAll";
+
+  /**
+   * The table ID column. It should be configured to a serial primary key type,
+   * as defined in PostgreSQL.
+   */
+  @Id
+  private Integer id;
 
 }

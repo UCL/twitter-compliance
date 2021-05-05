@@ -1,7 +1,6 @@
 package uk.ac.ucl.twitter.compliance.persist;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 
 import java.io.Serializable;
 
@@ -17,13 +16,6 @@ import java.io.Serializable;
 public abstract class TweetToVerifyImpl implements Serializable {
 
   private static final long serialVersionUID = 1L;
-
-  /**
-   * The table ID column. It should be configured to a serial primary key type,
-   * as defined in PostgreSQL.
-   */
-  @Id
-  private Integer id;
 
   /**
    * Table column to store the tweet ID.
