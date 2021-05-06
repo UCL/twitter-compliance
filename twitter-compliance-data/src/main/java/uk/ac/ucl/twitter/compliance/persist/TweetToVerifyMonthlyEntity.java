@@ -27,7 +27,7 @@ import java.io.Serializable;
       + "INNER JOIN TweetToDeleteEntity d")
 })
 public class TweetToVerifyMonthlyEntity extends TweetToVerifyImpl
-    implements TweetToVerify, Serializable {
+    implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -39,10 +39,10 @@ public class TweetToVerifyMonthlyEntity extends TweetToVerifyImpl
     name = "PUBLIC.TWEET_TO_DELETE_MONTHLY",
     joinColumns = {@JoinColumn(
         name = "TWEET_TO_VALIDATE_MONTHLY_ID",
-        referencedColumnName = "tweetIdStr")},
+        referencedColumnName = "TWEET_ID_STR")},
     inverseJoinColumns = {@JoinColumn(
         name = "TWEET_TO_DELETE_ID",
-        referencedColumnName = "tweetIdStr")}
+        referencedColumnName = "TWEET_ID_STR")}
   )
   private TweetToDeleteEntity tweetToDelete;
 

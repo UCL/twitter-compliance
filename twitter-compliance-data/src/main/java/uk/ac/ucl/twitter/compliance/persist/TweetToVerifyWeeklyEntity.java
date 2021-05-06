@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
     name = "TweetToVerifyWeeklyEntity.findAll",
     query = "SELECT t FROM TweetToVerifyWeeklyEntity t")
 public class TweetToVerifyWeeklyEntity extends TweetToVerifyImpl
-    implements TweetToVerify, Serializable {
+    implements Serializable {
 
   private static final long serialVersionUID = 1L;
 

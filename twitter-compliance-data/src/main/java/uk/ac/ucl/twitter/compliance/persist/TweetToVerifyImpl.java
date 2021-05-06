@@ -1,6 +1,7 @@
 package uk.ac.ucl.twitter.compliance.persist;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 
 import java.io.Serializable;
 
@@ -13,7 +14,8 @@ import java.io.Serializable;
  * <p>
  * All extending classes must implement {@code TweetToVerify}.
  */
-public abstract class TweetToVerifyImpl implements Serializable {
+@MappedSuperclass
+public abstract class TweetToVerifyImpl implements TweetToVerify, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -34,6 +36,7 @@ public abstract class TweetToVerifyImpl implements Serializable {
    * The Tweet ID, defined as a String containing a 64-bit number.
    * @return The tweet ID
    */
+  @Override
   public String getTweetIdStr() {
     return tweetIdStr;
   }
@@ -51,6 +54,7 @@ public abstract class TweetToVerifyImpl implements Serializable {
    * Obtains the file reference where the tweet is stored.
    * @return The file reference
    */
+  @Override
   public String getFileRef() {
     return fileRef;
   }
