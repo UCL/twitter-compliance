@@ -69,7 +69,7 @@ public class EntityAccessImpl implements EntityAccess {
             TweetToVerifyMonthlyEntity.QUERY_FIND_ALL,
             TweetToVerifyMonthlyEntity.class);
     tweetToDeleteQuery = entityManager.createNamedQuery(
-            TweetToDeleteEntity.FIND_BY_TWEETID,
+            TweetToDeleteEntity.FIND_BY_TWEET_ID,
             TweetToDeleteEntity.class);
   }
 

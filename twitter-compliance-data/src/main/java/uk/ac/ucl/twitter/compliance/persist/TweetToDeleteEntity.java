@@ -26,7 +26,7 @@ public class TweetToDeleteEntity implements Serializable {
    * Name of JPQL query. Selects all entities by tweet ID.
    */
   public static final String
-    FIND_BY_TWEETID = "TweetToDeleteEntity.findByTweetId";
+    FIND_BY_TWEET_ID = "TweetToDeleteEntity.findByTweetId";
 
   /**
    * The table ID column. It should be configured to a serial primary key type,
