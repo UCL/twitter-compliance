@@ -25,6 +25,7 @@
     <jakarta.jakartaee-api.version>9.1.0-RC1</jakarta.jakartaee-api.version>
     <junit.jupiter.version>5.7.1</junit.jupiter.version>
     <maven.checkstyle.version>3.1.2</maven.checkstyle.version>
+    <maven.clean.version>3.1.0</maven.clean.version>
     <maven.javadoc.version>3.2.0</maven.javadoc.version>
     <maven.site.version>3.9.1</maven.site.version>
     <maven.project-info-report.version>3.1.1</maven.project-info-report.version>
@@ -138,6 +139,18 @@
             <version>${checkstyle.version}</version>
           </dependency>
         </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>${maven.clean.version}</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>sun-appserv-samples</directory>
+            </fileset>
+          </filesets>
+        </configuration>
       </plugin>
     </plugins>
   </build>

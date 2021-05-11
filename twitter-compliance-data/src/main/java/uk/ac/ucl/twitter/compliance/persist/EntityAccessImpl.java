@@ -1,10 +1,10 @@
 package uk.ac.ucl.twitter.compliance.persist;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -32,54 +32,26 @@ public class EntityAccessImpl implements EntityAccess {
   private static final int BATCH_SIZE_FLUSH = 1000;
 
   /**
-   * Selects all tweets set for weekly verification.
-   */
-  private TypedQuery<TweetToVerifyWeeklyEntity> tweetToVerifyWeeklyQuery;
-
-  /**
-   * Selects all tweets set for monthly verification.
-   */
-  private TypedQuery<TweetToVerifyMonthlyEntity> tweetToVerifyMonthlyQuery;
-
-  /**
-   * Selects single tweet from pool set for deletion.
-   */
-  private TypedQuery<TweetToDeleteEntity> tweetToDeleteQuery;
-
-  /**
    * Converts from Entity classes to {@code TweetReference}.
    */
-  private final Function<TweetToVerify, TweetReference>
-    mapEntityToReference = (TweetToVerify t) -> {
-      TweetReference instance = new TweetReference();
-      instance.setFileRef(t.getFileRef());
-      instance.setIdStr(t.getTweetIdStr());
-      return instance;
-    };
-
-  /**
-   * Initialisation of named queries.
-   */
-  @PostConstruct
-  public void postConstruct() {
-    tweetToVerifyWeeklyQuery = entityManager.createNamedQuery(
-            TweetToVerifyWeeklyEntity.QUERY_FIND_ALL,
-            TweetToVerifyWeeklyEntity.class);
-    tweetToVerifyMonthlyQuery = entityManager.createNamedQuery(
-            TweetToVerifyMonthlyEntity.QUERY_FIND_ALL,
-            TweetToVerifyMonthlyEntity.class);
-    tweetToDeleteQuery = entityManager.createNamedQuery(
-            TweetToDeleteEntity.FIND_BY_TWEET_ID,
-            TweetToDeleteEntity.class);
-  }
+  private final Function<TweetToVerify, TweetReference> mapEntityToReference = (
+      TweetToVerify t) -> {
+    TweetReference instance = new TweetReference();
+    instance.setFileRef(t.getFileRef());
+    instance.setIdStr(t.getTweetIdStr());
+    return instance;
+  };
 
   /**
    * Obtains the list of tweets set for weekly verification.
    */
   @Override
   public List<TweetReference> getTweetsToVerifyWeekly() {
-    return tweetToVerifyWeeklyQuery.getResultList().stream()
-        .map(mapEntityToReference).collect(Collectors.toList());
+    final TypedQuery<TweetToVerifyWeeklyEntity> verWeeklyQuery = entityManager
+        .createNamedQuery(TweetToVerifyWeeklyEntity.QUERY_FIND_ALL,
+            TweetToVerifyWeeklyEntity.class);
+    return verWeeklyQuery.getResultList().stream().map(mapEntityToReference)
+        .collect(Collectors.toList());
   }
 
   /**
@@ -87,15 +59,17 @@ public class EntityAccessImpl implements EntityAccess {
    */
   @Override
   public List<TweetReference> getTweetsToVerifyMonthly() {
-    return tweetToVerifyMonthlyQuery.getResultList().stream()
-        .map(mapEntityToReference).collect(Collectors.toList());
+    final TypedQuery<TweetToVerifyMonthlyEntity> verMonthlyQuery = entityManager
+        .createNamedQuery(TweetToVerifyMonthlyEntity.QUERY_FIND_ALL,
+            TweetToVerifyMonthlyEntity.class);
+    return verMonthlyQuery.getResultList().stream().map(mapEntityToReference)
+        .collect(Collectors.toList());
   }
 
   /**
    * Persists the list of tweets that will be deleted. This list will be
-   * obtained using Twitter Compliance Batch jobs.
-   * It flushes changes in batches of 1,000 entities for improved
-   * performance.
+   * obtained using Twitter Compliance Batch jobs. It flushes changes in batches
+   * of 1,000 entities for improved performance.
    */
   @Override
   @Transactional
@@ -113,23 +87,45 @@ public class EntityAccessImpl implements EntityAccess {
   }
 
   /**
-   * Obtains the list of tweets that will be deleted from the collected pool
-   * of JSON files.
+   * Obtains the list of tweets that will be deleted from the collected pool of
+   * JSON files.
    */
   @Override
   public List<TweetReference> getBatchOfTweetsToDelete(final int batchSize,
       final VerificationInterval interval) {
-    // TODO Auto-generated method stub
-    return null;
+    List<TweetReference> tweetBatch;
+    switch (interval) {
+    case MONTHLY:
+      final TypedQuery<TweetToDeleteProjection> monthlyQuery = entityManager
+          .createNamedQuery(TweetToDeleteEntity.FIND_MONTHLY,
+              TweetToDeleteProjection.class);
+      tweetBatch = monthlyQuery.setMaxResults(batchSize).getResultList()
+          .stream().map(mapEntityToReference).collect(Collectors.toList());
+      break;
+    case WEEKLY:
+      final TypedQuery<TweetToDeleteProjection> weeklyQuery = entityManager
+          .createNamedQuery(TweetToDeleteEntity.FIND_WEEKLY,
+              TweetToDeleteProjection.class);
+      tweetBatch = weeklyQuery.setMaxResults(batchSize).getResultList().stream()
+          .map(mapEntityToReference).collect(Collectors.toList());
+      break;
+    default:
+      tweetBatch = new ArrayList<>();
+      break;
+    }
+    return tweetBatch;
   }
 
   /**
    * Removes the tweet ID from the list of tweets to be deleted. Method to be
-   * called once the process of deletion from the collected JSON files has
-   * been completed successfully.
+   * called once the process of deletion from the collected JSON files has been
+   * completed successfully.
    */
   @Override
   public void setDeletionComplete(final String tweetId) {
+    final TypedQuery<TweetToDeleteEntity> tweetToDeleteQuery = entityManager
+        .createNamedQuery(TweetToDeleteEntity.FIND_BY_TWEET_ID,
+            TweetToDeleteEntity.class);
     tweetToDeleteQuery.setParameter("tweetIdStr", tweetId);
     TweetToDeleteEntity entity = tweetToDeleteQuery.getSingleResult();
     entityManager.remove(entity);

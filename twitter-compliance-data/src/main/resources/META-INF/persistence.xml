@@ -11,5 +11,10 @@
     <pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToVerifyMonthlyEntity</pns:class>
     <pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToDeleteEntity</pns:class>
     <pns:class>uk.ac.ucl.twitter.compliance.persist.TweetToVerifyImpl</pns:class>
+    <pns:properties>
+      <pns:property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+      <pns:property name="eclipselink.logging.logger" value="org.eclipse.persistence.logging.DefaultSessionLog"/>
+      <pns:property name="eclipselink.logging.level" value="FINE"/>
+    </pns:properties>
   </pns:persistence-unit>
 </pns:persistence>
