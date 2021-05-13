@@ -10,7 +10,7 @@
   <artifactId>twitter-compliance-data</artifactId>
   <name>twitter compliance data</name>
   <description>Data access module</description>
-  <packaging>jar</packaging>
+  <packaging>ejb</packaging>
   
   <properties>
     <derby.version>10.15.2.0</derby.version>

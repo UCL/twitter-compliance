@@ -15,6 +15,7 @@
     <module>twitter-compliance-api-client</module>
     <module>twitter-compliance-batch</module>
     <module>twitter-compliance-lib</module>
+    <module>package</module>
   </modules>
 
   <properties>
@@ -26,6 +27,7 @@
     <junit.jupiter.version>5.7.1</junit.jupiter.version>
     <maven.checkstyle.version>3.1.2</maven.checkstyle.version>
     <maven.clean.version>3.1.0</maven.clean.version>
+    <maven.ejb.version>3.1.0</maven.ejb.version>
     <maven.javadoc.version>3.2.0</maven.javadoc.version>
     <maven.site.version>3.9.1</maven.site.version>
     <maven.project-info-report.version>3.1.1</maven.project-info-report.version>
@@ -64,6 +66,15 @@
         <filtering>true</filtering>
       </resource>
     </resources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-ejb-plugin</artifactId>
+          <version>${maven.ejb.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
