@@ -25,6 +25,12 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>twitter-compliance-scheduler</artifactId>
+      <version>${project.version}</version>
+      <type>ejb</type>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>twitter-compliance-lib</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -45,6 +51,11 @@
               <groupId>${project.groupId}</groupId>
               <artifactId>twitter-compliance-data</artifactId>
               <bundleFileName>twitter-compliance-data.jar</bundleFileName>
+            </ejbModule>
+            <ejbModule>
+              <groupId>${project.groupId}</groupId>
+              <artifactId>twitter-compliance-scheduler</artifactId>
+              <bundleFileName>twitter-compliance-scheduler.jar</bundleFileName>
             </ejbModule>
             <jarModule>
               <groupId>${project.groupId}</groupId>
