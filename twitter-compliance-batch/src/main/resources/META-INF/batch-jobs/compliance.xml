@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsl:job
+  id="compliance-weekly" 
+  version="2.0"
+  xmlns:jsl="https://jakarta.ee/xml/ns/jakartaee" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/jobXML_2_0.xsd ">
+  <jsl:decision ref="intervalDecider" id="interval-decider">
+    <jsl:next on="weekly" to="weeklyQuery"/>
+    <jsl:next on="monthly" to="monthlyQuery"/>
+  </jsl:decision>
+  <jsl:step id="weeklyQuery">
+    <jsl:batchlet ref="weeklyDeletableBatchlet"/>
+  </jsl:step>
+</jsl:job>
