@@ -10,5 +10,21 @@
   <artifactId>twitter-compliance-scheduler</artifactId>
   <name>twitter compliance scheduler</name>
   <description>Scheduler module</description>
-  <packaging>jar</packaging>
+  <packaging>ejb</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>uk.ac.ucl.twitter</groupId>
+      <artifactId>twitter-compliance-lib</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 </project>
